@@ -9,13 +9,13 @@ fi
 VERSION=$1
 
 
-ZIP=${VERSION}_web_ui.zip
+ZIP=consul_${VERSION}_web_ui.zip
 
-URL="https://dl.bintray.com/mitchellh/consul/${ZIP}"
+URL="https://releases.hashicorp.com/consul/${VERSION}/${ZIP}"
 echo $"Creating consul-ui RPM build file version ${VERSION}"
 
 # fetching consul
-wget --no-check-certificate -q $URL  || {
+curl  -L -k -O $URL  || {
     echo $"URL or version not found!" >&2
     exit 1
 }
@@ -46,3 +46,4 @@ fpm -s dir -t rpm -f \
        opt/ etc/
 
 rm -rf target/opt
+rm -rf target/etc
